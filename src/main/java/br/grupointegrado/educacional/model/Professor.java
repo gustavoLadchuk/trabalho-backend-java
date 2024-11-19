@@ -1,11 +1,10 @@
 package br.grupointegrado.educacional.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Professores")
@@ -21,6 +20,18 @@ public class Professor {
     private String telefone;
     @Column
     private String especialidade;
+
+    @OneToMany(mappedBy = "professor")
+    @JsonIgnoreProperties("professor")
+    private List<Disciplina> disciplinas;
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
 
     public int getId() {
         return id;

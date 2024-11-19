@@ -1,5 +1,6 @@
 package br.grupointegrado.educacional.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -18,6 +19,19 @@ public class Curso {
     private String codigo;
     @Column
     private int carga_horaria;
+
+    @OneToMany(mappedBy = "curso")
+    @JsonIgnoreProperties("curso")
+    private List<Disciplina> disciplinas;
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
+
     public int getId() {
         return id;
     }
