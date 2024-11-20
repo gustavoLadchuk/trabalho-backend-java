@@ -21,17 +21,17 @@ public class Professor {
     @Column
     private String especialidade;
 
-    @OneToMany(mappedBy = "professor")
-    @JsonIgnoreProperties("professor")
-    private List<Disciplina> disciplinas;
-
-    public List<Disciplina> getDisciplinas() {
-        return disciplinas;
-    }
-
-    public void setDisciplinas(List<Disciplina> disciplinas) {
-        this.disciplinas = disciplinas;
-    }
+//    @OneToMany(mappedBy = "professor")
+//    @JsonIgnoreProperties("professor")
+//    private List<Disciplina> disciplinas;
+//
+//    public List<Disciplina> getDisciplinas() {
+//        return disciplinas;
+//    }
+//
+//    public void setDisciplinas(List<Disciplina> disciplinas) {
+//        this.disciplinas = disciplinas;
+//    }
 
     public int getId() {
         return id;

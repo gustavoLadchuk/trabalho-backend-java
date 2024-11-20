@@ -21,17 +21,17 @@ public class Aluno {
     @Column
     private LocalDate data_nascimento;
 
-    @OneToMany(mappedBy = "aluno")
-    @JsonIgnoreProperties("aluno")
-    private List<Matricula> matriculas;
-
-    public List<Matricula> getMatriculas() {
-        return matriculas;
-    }
-
-    public void setMatriculas(List<Matricula> matriculas) {
-        this.matriculas = matriculas;
-    }
+//    @OneToMany(mappedBy = "aluno")
+//    @JsonIgnoreProperties("aluno")
+//    private List<Matricula> matriculas;
+//
+//    public List<Matricula> getMatriculas() {
+//        return matriculas;
+//    }
+//
+//    public void setMatriculas(List<Matricula> matriculas) {
+//        this.matriculas = matriculas;
+//    }
 
     public int getId() {
         return id;

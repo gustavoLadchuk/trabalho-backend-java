@@ -2,6 +2,7 @@ package br.grupointegrado.educacional.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -21,7 +22,7 @@ public class Nota {
     private Disciplina disciplina;
 
     @Column
-    private float nota;
+    private BigDecimal nota;
 
     @Column
     private LocalDate data_lancamento;
@@ -50,11 +51,11 @@ public class Nota {
         this.disciplina = disciplina;
     }
 
-    public float getNota() {
+    public BigDecimal getNota() {
         return nota;
     }
 
-    public void setNota(float nota) {
+    public void setNota(BigDecimal nota) {
         this.nota = nota;
     }
 

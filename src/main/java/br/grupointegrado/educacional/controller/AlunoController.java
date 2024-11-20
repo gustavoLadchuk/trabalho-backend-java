@@ -4,6 +4,7 @@ import br.grupointegrado.educacional.dto.AlunoRequestDTO;
 import br.grupointegrado.educacional.model.Aluno;
 import br.grupointegrado.educacional.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,18 +17,19 @@ public class AlunoController {
     private AlunoRepository repository;
 
     @GetMapping()
-    public List<Aluno> findAll() {
-        return this.repository.findAll();
+    public ResponseEntity<List<Aluno>> findAll() {
+        return ResponseEntity.ok(this.repository.findAll());
     }
 
     @GetMapping("/{id}")
-    public Aluno findById(@PathVariable Integer id) {
-        return this.repository.findById(id)
+    public ResponseEntity<Aluno> findById(@PathVariable Integer id) {
+        Aluno aluno = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+        return ResponseEntity.ok(aluno);
     }
 
     @PostMapping
-    public Aluno save(@RequestBody AlunoRequestDTO dto) {
+    public ResponseEntity<Aluno> save(@RequestBody AlunoRequestDTO dto) {
         Aluno aluno = new Aluno();
 
         aluno.setNome(dto.nome());
@@ -35,11 +37,12 @@ public class AlunoController {
         aluno.setData_nascimento(dto.data_nascimento());
         aluno.setMatricula(dto.matricula());
 
-        return this.repository.save(aluno);
+        this.repository.save(aluno);
+        return ResponseEntity.ok(aluno);
     }
 
     @PutMapping("/{id}")
-    public Aluno update(@PathVariable Integer id, @RequestBody AlunoRequestDTO dto) {
+    public ResponseEntity<Aluno> update(@PathVariable Integer id, @RequestBody AlunoRequestDTO dto) {
         Aluno aluno = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
 
@@ -48,14 +51,16 @@ public class AlunoController {
         aluno.setData_nascimento(dto.data_nascimento());
         aluno.setMatricula(dto.matricula());
 
-        return this.repository.save(aluno);
+        this.repository.save(aluno);
+        return ResponseEntity.ok(aluno);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Aluno aluno = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
         this.repository.delete(aluno);
+    return ResponseEntity.noContent().build();
     }
 
 }
