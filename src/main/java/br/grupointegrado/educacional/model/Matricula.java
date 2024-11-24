@@ -21,17 +21,17 @@ public class Matricula {
     @JoinColumn(name = "turma_id", referencedColumnName = "id")
     private Turma turma;
 
-    @OneToMany(mappedBy = "nota")
-    @JsonIgnoreProperties("nota")
-    private List<Nota> notas;
-
-    public List<Nota> getNotas() {
-        return notas;
-    }
-
-    public void setNotas(List<Nota> notas) {
-        this.notas = notas;
-    }
+//    @OneToMany(mappedBy = "nota")
+//    @JsonIgnoreProperties("nota")
+//    private List<Nota> notas;
+//
+//    public List<Nota> getNotas() {
+//        return notas;
+//    }
+//
+//    public void setNotas(List<Nota> notas) {
+//        this.notas = notas;
+//    }
 
     public Integer getId() {
         return id;

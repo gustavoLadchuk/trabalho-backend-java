@@ -51,7 +51,7 @@ public class MatriculaController {
         Turma turma = this.turmaRepository.findById(dto.turma_id())
                 .orElseThrow(() -> new IllegalArgumentException("Turma não encontrada"));
 
-        Long idadeAluno = ChronoUnit.YEARS.between(aluno.getData_nascimento(), LocalDate.now());
+        long idadeAluno = ChronoUnit.YEARS.between(aluno.getData_nascimento(), LocalDate.now());
 
         if (idadeAluno < 18){
             throw new IllegalArgumentException("O aluno não possui a idade necessária para se matricular nesse curso");
