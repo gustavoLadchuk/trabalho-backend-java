@@ -65,5 +65,40 @@ public class MatriculaController {
         return ResponseEntity.ok(matricula);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Matricula> update(@PathVariable Integer id, @RequestBody MatriculaRequestDTO dto){
+        Matricula matricula = this.repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Matrícula não encontrada"));
+
+        Aluno aluno = this.alunoRepository.findById(dto.aluno_id())
+                .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+        Turma turma = this.turmaRepository.findById(dto.turma_id())
+                .orElseThrow(() -> new IllegalArgumentException("Turma não encontrada"));
+
+        long idadeAluno = ChronoUnit.YEARS.between(aluno.getData_nascimento(), LocalDate.now());
+
+        if (idadeAluno < 18){
+            throw new IllegalArgumentException("O aluno não possui a idade necessária para se matricular nesse curso");
+        }
+
+        matricula.setAluno(aluno);
+        matricula.setTurma(turma);
+
+        this.repository.save(matricula);
+
+        return ResponseEntity.ok(matricula);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Matricula matricula = this.repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Matrícula não encontrada"));
+
+        this.repository.delete(matricula);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 
 }

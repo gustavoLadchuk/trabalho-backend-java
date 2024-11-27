@@ -27,17 +27,17 @@ public class Disciplina {
     @JoinColumn(name = "professor_id", referencedColumnName = "id")
     private Professor professor;
 
-    @OneToMany(mappedBy = "nota")
-    @JsonIgnoreProperties("nota")
-    private List<Nota> notas;
-
-    public List<Nota> getNotas() {
-        return notas;
-    }
-
-    public void setNotas(List<Nota> notas) {
-        this.notas = notas;
-    }
+//    @OneToMany(mappedBy = "disciplina")
+//    @JsonIgnoreProperties("disciplina")
+//    private List<Nota> notas;
+//
+//    public List<Nota> getNotas() {
+//        return notas;
+//    }
+//
+//    public void setNotas(List<Nota> notas) {
+//        this.notas = notas;
+//    }
 
     public Integer getId() {
         return id;

@@ -21,8 +21,8 @@ public class Matricula {
     @JoinColumn(name = "turma_id", referencedColumnName = "id")
     private Turma turma;
 
-//    @OneToMany(mappedBy = "nota")
-//    @JsonIgnoreProperties("nota")
+//    @OneToMany(mappedBy = "matricula")
+//    @JsonIgnoreProperties("matricula")
 //    private List<Nota> notas;
 //
 //    public List<Nota> getNotas() {

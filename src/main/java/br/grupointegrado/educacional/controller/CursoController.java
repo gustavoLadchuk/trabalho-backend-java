@@ -72,8 +72,8 @@ public class CursoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/add-disciplina")
-    public ResponseEntity<Curso> addMatricula(@PathVariable Integer id, @RequestBody DisciplinaRequestDTO dto){
+    @PostMapping("/{id}/disciplinas")
+    public ResponseEntity<Curso> addDisciplina(@PathVariable Integer id, @RequestBody DisciplinaRequestDTO dto){
         Curso curso = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
 
@@ -88,6 +88,39 @@ public class CursoController {
 
         this.disciplinaRepository.save(disciplina);
         return ResponseEntity.ok(curso);
+    }
+
+    @PutMapping("/{id}/disciplinas/{id_disciplina}")
+    public ResponseEntity<Curso> updateDisciplina(@PathVariable Integer id,
+                                                  @PathVariable Integer id_disciplina,
+                                                  @RequestBody DisciplinaRequestDTO dto) {
+        Curso curso = this.repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
+
+        Disciplina disciplina = this.disciplinaRepository.findById(id_disciplina)
+                .orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
+
+        Professor professor = this.professorRepository.findById(dto.professor_id())
+                .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado"));
+
+        disciplina.setCurso(curso);
+        disciplina.setProfessor(professor);
+        disciplina.setCodigo(dto.codigo());
+        disciplina.setNome(dto.nome());
+
+        this.disciplinaRepository.save(disciplina);
+        return ResponseEntity.ok(curso);
+
+    }
+
+    @DeleteMapping("/delete-disciplina/{id_disciplina}")
+    public ResponseEntity<Void> deleteDisciplina(@PathVariable Integer id_disciplina) {
+
+        Disciplina disciplina = this.disciplinaRepository.findById(id_disciplina)
+                .orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
+
+        this.disciplinaRepository.delete(disciplina);
+        return ResponseEntity.noContent().build();
     }
 
 
