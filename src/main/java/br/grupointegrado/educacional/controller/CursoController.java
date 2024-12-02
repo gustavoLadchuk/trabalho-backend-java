@@ -27,6 +27,12 @@ public class CursoController {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
 
+    private void checkCodigo(String codigo){
+        if (!codigo.matches("\\d+")) {
+            throw new IllegalArgumentException("Código inválido");
+        }
+    }
+
     @GetMapping()
     public ResponseEntity<List<Curso>> findAll() {
         return ResponseEntity.ok(this.repository.findAll());
@@ -43,6 +49,12 @@ public class CursoController {
     public ResponseEntity<Curso> save(@RequestBody CursoRequestDTO dto) {
         Curso curso = new Curso();
 
+        if (dto.carga_horaria() <= 0){
+            throw new IllegalArgumentException("Carga horária inválida");
+        }
+
+        checkCodigo(dto.codigo());
+
         curso.setNome(dto.nome());
         curso.setCodigo(dto.codigo());
         curso.setCarga_horaria(dto.carga_horaria());
@@ -55,6 +67,12 @@ public class CursoController {
     public ResponseEntity<Curso> update(@PathVariable Integer id, @RequestBody CursoRequestDTO dto) {
         Curso curso = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+
+        if (dto.carga_horaria() <= 0){
+            throw new IllegalArgumentException("Carga horária inválida");
+        }
+
+        checkCodigo(dto.codigo());
 
         curso.setNome(dto.nome());
         curso.setCodigo(dto.codigo());
@@ -73,12 +91,14 @@ public class CursoController {
     }
 
     @PostMapping("/{id}/disciplinas")
-    public ResponseEntity<Curso> addDisciplina(@PathVariable Integer id, @RequestBody DisciplinaRequestDTO dto){
+    public ResponseEntity<Curso> saveDisciplina(@PathVariable Integer id, @RequestBody DisciplinaRequestDTO dto){
         Curso curso = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
 
         Professor professor = this.professorRepository.findById(dto.professor_id())
                 .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado"));
+
+        checkCodigo(dto.codigo());
 
         Disciplina disciplina = new Disciplina();
         disciplina.setNome(dto.nome());
@@ -102,6 +122,8 @@ public class CursoController {
 
         Professor professor = this.professorRepository.findById(dto.professor_id())
                 .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado"));
+
+        checkCodigo(dto.codigo());
 
         disciplina.setCurso(curso);
         disciplina.setProfessor(professor);

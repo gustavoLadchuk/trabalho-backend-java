@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -52,6 +53,11 @@ public class TurmaController {
         Curso curso = this.cursoRepository.findById(dto.curso_id())
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
 
+
+        if (dto.semestre() != 1 && dto.semestre() != 2) {
+            throw new IllegalArgumentException("Semestre Inválido");
+        }
+
         turma.setAno(dto.ano());
         turma.setSemestre(dto.semestre());
         turma.setCurso(curso);
@@ -67,6 +73,10 @@ public class TurmaController {
 
         Curso curso = this.cursoRepository.findById(dto.curso_id())
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
+
+        if (dto.semestre() != 1 && dto.semestre() != 2) {
+            throw new IllegalArgumentException("Semestre Inválido");
+        }
 
         turma.setAno(dto.ano());
         turma.setSemestre(dto.semestre());

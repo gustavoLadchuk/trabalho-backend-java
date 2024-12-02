@@ -11,7 +11,8 @@ import java.util.List;
 public class Professor {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column
     private String nome;
     @Column

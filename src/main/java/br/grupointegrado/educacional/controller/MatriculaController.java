@@ -30,12 +30,12 @@ public class MatriculaController {
     private TurmaRepository turmaRepository;
 
     @GetMapping
-    public  ResponseEntity<List<Matricula>> getMatriculas() {
+    public  ResponseEntity<List<Matricula>> findAll() {
         return ResponseEntity.ok(this.repository.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Matricula> getById(@PathVariable Integer id){
+    public ResponseEntity<Matricula> findById(@PathVariable Integer id){
         Matricula matricula = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Matricula não encontrada"));
 
@@ -54,7 +54,7 @@ public class MatriculaController {
         long idadeAluno = ChronoUnit.YEARS.between(aluno.getData_nascimento(), LocalDate.now());
 
         if (idadeAluno < 18){
-            throw new IllegalArgumentException("O aluno não possui a idade necessária para se matricular nesse curso");
+            throw new IllegalArgumentException("O aluno não possui a idade mínima para se matricular nesse curso");
         }
 
         matricula.setAluno(aluno);
@@ -78,7 +78,7 @@ public class MatriculaController {
         long idadeAluno = ChronoUnit.YEARS.between(aluno.getData_nascimento(), LocalDate.now());
 
         if (idadeAluno < 18){
-            throw new IllegalArgumentException("O aluno não possui a idade necessária para se matricular nesse curso");
+            throw new IllegalArgumentException("O aluno não possui a idade mínima para se matricular nesse curso");
         }
 
         matricula.setAluno(aluno);

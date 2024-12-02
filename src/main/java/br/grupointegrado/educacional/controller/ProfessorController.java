@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/professores")
@@ -15,6 +16,18 @@ public class ProfessorController {
 
     @Autowired
     private ProfessorRepository repository;
+
+    private void checkEmail(String email){
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
+            throw new IllegalArgumentException("Email inválido");
+        }
+    }
+
+    private void checkTelefone(String matricula){
+        if (!matricula.matches("\\(\\d{2}\\) \\d{5}-\\d{4}")) {
+            throw new IllegalArgumentException("Telefone inválido, formato correto: (xx) xxxxx-xxxx");
+        }
+    }
 
     @GetMapping()
     public ResponseEntity<List<Professor>> findAll() {
@@ -32,6 +45,9 @@ public class ProfessorController {
     public ResponseEntity<Professor> save(@RequestBody ProfessorRequestDTO dto) {
         Professor professor = new Professor();
 
+        checkEmail(dto.email());
+        checkTelefone(dto.telefone());
+
         professor.setNome(dto.nome());
         professor.setEmail(dto.email());
         professor.setTelefone(dto.telefone());
@@ -45,6 +61,9 @@ public class ProfessorController {
     public ResponseEntity<Professor> update(@PathVariable Integer id, @RequestBody ProfessorRequestDTO dto) {
         Professor professor = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+
+        checkEmail(dto.email());
+        checkTelefone(dto.telefone());
 
         professor.setNome(dto.nome());
         professor.setEmail(dto.email());

@@ -12,13 +12,14 @@ import java.util.List;
 public class Curso {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column
     private String nome;
     @Column
     private String codigo;
     @Column
-    private int carga_horaria;
+    private Integer carga_horaria;
 
     @OneToMany(mappedBy = "curso")
     @JsonIgnoreProperties("curso")

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class NotaController {
     }
 
     @GetMapping("/disciplina/{id}")
-    public ResponseEntity<List<Nota>> findByDisciplinaID(@PathVariable Integer id) {
+    public ResponseEntity<List<Nota>> findByDisciplinaId(@PathVariable Integer id) {
         return ResponseEntity.ok(this.notaRepository.findByDisciplinaId(id));
     }
 
@@ -51,6 +52,11 @@ public class NotaController {
 
         Disciplina disciplina = this.disciplinaRepository.findById(dto.disciplina_id())
                 .orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
+
+        if (dto.nota().compareTo(new BigDecimal(0)) < 0 ||
+                dto.nota().compareTo(new BigDecimal(10)) > 0) {
+            throw new IllegalArgumentException("Nota Inválida");
+        }
 
         nota.setNota(dto.nota());
         nota.setMatricula(matricula);
@@ -72,6 +78,11 @@ public class NotaController {
 
         Disciplina disciplina = this.disciplinaRepository.findById(dto.disciplina_id())
                 .orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
+
+        if (dto.nota().compareTo(new BigDecimal(0)) < 0 ||
+                dto.nota().compareTo(new BigDecimal(10)) > 0) {
+            throw new IllegalArgumentException("Nota Inválida");
+        }
 
         nota.setNota(dto.nota());
         nota.setMatricula(matricula);

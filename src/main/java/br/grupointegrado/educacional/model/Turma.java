@@ -11,11 +11,12 @@ import java.util.List;
 public class Turma {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column
-    private int ano;
+    private Integer ano;
     @Column
-    private int semestre;
+    private Integer semestre;
     @ManyToOne
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
@@ -37,7 +38,7 @@ public class Turma {
         this.matriculas = matriculas;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,7 +46,7 @@ public class Turma {
         return ano;
     }
 
-    public void setAno(int ano) {
+    public void setAno(Integer ano) {
         this.ano = ano;
     }
 
@@ -53,7 +54,7 @@ public class Turma {
         return semestre;
     }
 
-    public void setSemestre(int semestre) {
+    public void setSemestre(Integer semestre) {
         this.semestre = semestre;
     }
 
